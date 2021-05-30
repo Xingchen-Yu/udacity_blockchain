@@ -143,7 +143,7 @@ class Blockchain {
     getBlockByHash(hash) {
         let self = this;
         return new Promise((resolve, reject) => {
-            const found_block = self.chain.filter(x => x.hash==hash)[0];
+            const found_block = self.chain.find(x => x.hash==hash)[0];
             if(found_block){
                 resolve(found_block);
             }else{
@@ -210,7 +210,7 @@ class Blockchain {
                     }
                     if(temp>0){
                         if(block.previousBlockHash != self.chain[temp-1].hash){
-                            errorLog.push({error:'previous block hash is not unmatched'});
+                            errorLog.push({error:'previous block hash is not matched'});
                         }
     }
                     temp += 1;
