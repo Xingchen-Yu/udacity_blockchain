@@ -143,7 +143,7 @@ class Blockchain {
     getBlockByHash(hash) {
         let self = this;
         return new Promise((resolve, reject) => {
-            const found_block = self.chain.find(x => x.hash==hash)[0];
+            const found_block = self.chain.find(x => x.hash==hash);
             if(found_block){
                 resolve(found_block);
             }else{
