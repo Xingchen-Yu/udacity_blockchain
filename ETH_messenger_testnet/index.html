@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deploy a Remix Contract</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Ethereum Secret Messenger</h1>
+        <hr>
+
+        <label for="message">This site writes a secret message to the Ethereum
+            blockchain!</label>
+        <input id="userInput" type="text">
+
+        <button id="setMessageButton">Set secret message</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            console.log('using customize HTTP provider')
+            web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/f5c1853183bd42b18ec287a7e7a23650"));
+        }
+
+ // Set a default account
+ web3.eth.defaultAccount = '0x72ae808C878A6b622dfA39f8DDe1a9bd7111D1C3'
+ //web3.eth.getAccounts().then(e => console.log(e[0]));
+ console.log(web3.eth.defaultAccount)
+// Get the contract address
+var RemixContract = new web3.eth.Contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "string"
+			}
+		],
+		"name": "setMessage",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getMessage",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+],'0x416Cb7952D9E82cf33124021Db94686ED2f337c0');
+
+console.log(RemixContract)
+
+$("#setMessageButton").click(function () {
+    RemixContract.methods["setMessage(string)"]($("#userInput").val()).send({from:web3.eth.defaultAccount});
+            console.log($("#userInput").val())
+        });
+    
+
+</script>
+</body>
+
+</html>
