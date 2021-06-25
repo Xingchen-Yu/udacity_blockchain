@@ -54,10 +54,17 @@ const App = {
     await claimStar().send({from: this.account}); // Use `send` instead of `call` when you called a function in your Smart Contract
     const response = await starOwner().call();
     App.setStatus("New Star Owner is " + response + ".");
-  }
+  },
   
   // function to change the Star name (added by myself)
-  
+  // function to change the Star name (added by myself)
+  changeStarName: async function(){
+    const{changeName,starName} = this.meta.methods;
+    const new_name = 'Yolo 42069';
+    await changeName(new_name).send({from: this.account});
+    const response = await starName().call();
+    App.setStatus("Star name has been changed to " + response + ".");
+  }
 
 };
 
