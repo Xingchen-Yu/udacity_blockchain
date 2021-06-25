@@ -31,7 +31,8 @@
       <br>
       
       <h1>Change Star Name: </h1>
-      <br><br><button id="ChangeStarName" onclick="App.changeStarName()">Change Star Name</button>
+      <input id="userInput" type="text">
+      <br><br><button id="ChangeStarName" onclick="App.changeStarName(document.getElementById('userInput').value)">Change Star Name</button>
       <br><br>
       <br>
       <hr>
