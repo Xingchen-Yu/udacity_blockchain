@@ -73,3 +73,44 @@ it('lets user2 buy a star and decreases its balance in ether', async() => {
     assert.equal(value, starPrice);
   });
 
+  it('Check token name and symbol are properly added',async()=>{
+    let instance = await StarNotary.deployed();
+    let token_name = await instance.name();
+    let token_symbol = await instance.symbol();
+    assert.equal('ST_Moon',token_symbol)
+    assert.equal('StarToken',token_name)
+  })
+
+  it('Two user can exchange accounts',async()=>{
+    let instance = await StarNotary.deployed();
+    let user1 = accounts[1];
+    let user2 = accounts[2];
+    const starID_1 = 8;
+    const starID_2 = 24;
+    await instance.createStar('Kobe 8', starID_1, {from: user1});
+    await instance.createStar('Kobe 24', starID_2, {from: user2});
+    await instance.exchangeStars(starID_1,starID_2);
+    assert.equal(user1,await instance.ownerOf.call(starID_2))
+    assert.equal(user2,await instance.ownerOf.call(starID_1))
+  })
+
+  it('Star token can be transfered from one to another',async()=>{
+    let instance = await StarNotary.deployed();
+    let user1 = accounts[1];
+    let user2 = accounts[2];
+    const starID = 8888;
+    await instance.createStar('Kobe forever',starID,{from:user1})
+    await instance.transferStar(user2,starID,{from:user1});
+    assert.equal(user2,await instance.ownerOf.call(starID));
+  })
+
+  it('Can retrieve star name',async()=>{
+    let instance = await StarNotary.deployed();
+    let user1 = accounts[1];
+    const starID = 1234;
+    const starName = 'Kobe Bryant';
+    await instance.createStar('Kobe Bryant',starID,{from:user1});
+    let starNameLookedUp = await instance.tokenIdToStarInfo.call(starID)
+    console.log(starNameLookedUp);
+    assert.equal(starName, starNameLookedUp);
+  })
