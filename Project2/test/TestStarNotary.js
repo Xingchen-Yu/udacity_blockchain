@@ -72,7 +72,7 @@ it('lets user2 buy a star and decreases its balance in ether', async() => {
     let value = Number(balanceOfUser2BeforeTransaction) - Number(balanceAfterUser2BuysStar);
     assert.equal(value, starPrice);
   });
-
+  // The token name and token symbol are added properly.
   it('Check token name and symbol are properly added',async()=>{
     let instance = await StarNotary.deployed();
     let token_name = await instance.name();
@@ -80,7 +80,7 @@ it('lets user2 buy a star and decreases its balance in ether', async() => {
     assert.equal('ST_Moon',token_symbol)
     assert.equal('StarToken',token_name)
   })
-
+  // 2 users can exchange their stars. 
   it('Two user can exchange accounts',async()=>{
     let instance = await StarNotary.deployed();
     let user1 = accounts[1];
@@ -93,6 +93,7 @@ it('lets user2 buy a star and decreases its balance in ether', async() => {
     assert.equal(user1,await instance.ownerOf.call(starID_2))
     assert.equal(user2,await instance.ownerOf.call(starID_1))
   })
+  //3) Stars Tokens can be transferred from one address to another.
 
   it('Star token can be transfered from one to another',async()=>{
     let instance = await StarNotary.deployed();

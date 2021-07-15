@@ -4,7 +4,7 @@ pragma solidity >=0.8.1;
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract StarNotary is ERC721 {
-    
+    // Smart token name and symbol
     constructor() ERC721("StarToken",'ST_Moon'){}
 
     struct Star {
